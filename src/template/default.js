@@ -9,7 +9,7 @@ export const defaultTemplate = (pptx, title, content) => {
   const centerY = (slideHeight - imageSize) / 2;
 
   slide.addImage({
-    path: "/신한은행.png",
+    path: `${process.env.PUBLIC_URL}/신한은행.png`,
     x: centerX,
     y: centerY,
     w: imageSize,
