@@ -1,86 +1,53 @@
-import React, { useState } from "react";
+import React from "react";
 import PptxGenJS from "pptxgenjs";
-import {
-  Container,
-  TextField,
-  Button,
-  Typography,
-  Box,
-  Alert,
-} from "@mui/material";
-import { templates } from "./template";
+import { slidesConfig } from "./slidesConfig";
+import { introductionTemplate } from "./templates/introductionTemplate";
+import { problemTemplate } from "./templates/problemTemplate";
+import { solutionTemplate } from "./templates/solutionTemplate";
+import { marketTemplate } from "./templates/marketTemplate";
+import { mockData } from "./mockData";
 
-function App() {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [selectedTemplate, setselectedTemplate] = useState("default");
-  const [error, setError] = useState("");
+const templates = {
+  introduction: introductionTemplate,
+  problem: problemTemplate,
+  solution: solutionTemplate,
+  market: marketTemplate, // ✅ Market 템플릿 추가
+};
 
-  const createPPT = () => {
-    if (!title.trim() || !content.trim()) {
-      setError("제목과 내용을 모두 입력해주세요!");
-      return;
-    }
-
-    setError("");
-
+const App = () => {
+  const handleGeneratePPT = () => {
     let pptx = new PptxGenJS();
+    pptx.defineSlideMaster({
+      title: "MASTER_SLIDE",
+      objects: [{ text: " ", options: { FontFace: "Noto Sans" } }],
+    });
 
-    pptx = templates[selectedTemplate](pptx, title, content);
+    slidesConfig.forEach((slideConfig) => {
+      let slide = pptx.addSlide("MASTER_SLIDE");
+      const templateFunc = templates[slideConfig.template];
+      const slideData = mockData[slideConfig.key];
 
-    pptx.writeFile({ fileName: `${title}.pptx` });
+      if (templateFunc) {
+        templateFunc(slide, slideData, pptx); // ✅ pptx 인스턴스 전달
+      } else {
+        console.error(`❌ Error: ${slideConfig.key} 템플릿을 찾을 수 없음!`);
+      }
+    });
 
-    setTitle("");
-    setContent("");
+    pptx.writeFile({ fileName: "Market_Analysis_Presentation.pptx" });
   };
 
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ textAlign: "center", mt: 5 }}>
-        <Typography variant="h4" gutterBottom>
-          PPT 생성기
-        </Typography>
-
-        {/* 오류 메시지 */}
-        {error && (
-          <Alert severity="error" sx={{ mb: 2 }}>
-            {error}
-          </Alert>
-        )}
-
-        <TextField
-          fullWidth
-          label="제목"
-          variant="outlined"
-          placeholder="제목을 입력해주세요."
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          margin="normal"
-        />
-
-        <TextField
-          fullWidth
-          label="내용"
-          variant="outlined"
-          multiline
-          rows={4}
-          placeholder="내용을 입력해주세요."
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          margin="normal"
-        />
-        <Button
-          variant="contained"
-          color="primary"
-          fullWidth
-          onClick={createPPT}
-          sx={{ mt: 2 }}
-        >
-          PPT 만들기
-        </Button>
-      </Box>
-    </Container>
+    <div style={{ textAlign: "center", marginTop: "50px" }}>
+      <h1>PPT 생성기</h1>
+      <button
+        onClick={handleGeneratePPT}
+        style={{ padding: "10px 20px", fontSize: "16px", cursor: "pointer" }}
+      >
+        PPT 만들기
+      </button>
+    </div>
   );
-}
+};
 
 export default App;
