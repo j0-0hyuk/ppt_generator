@@ -1,6 +1,7 @@
 export const slidesConfig = [
-  { key: "introduction", template: "introduction" },
-  { key: "problem", template: "problem" },
-  { key: "solution", template: "solution" },
-  { key: "market", template: "market" }, // ✅ Market 슬라이드 추가
+  { key: "introduction", template: "introductionTemplate" },
+  { key: "problem", template: "problemTemplate" },
+  { key: "solution", template: "solutionTemplate" },
+  { key: "market", template: "marketTemplate" },
+  { key: "tamSamSom", template: "tamSamSomTemplate" }, // ✅ TAM, SAM, SOM 추가
 ];

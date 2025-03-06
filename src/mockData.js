@@ -64,4 +64,29 @@ export const mockData = {
       ],
     },
   },
+  tamSamSom: {
+    title:
+      "글로벌 문서 자동 생성 AI 시장에서 혁신적인 솔루션으로 5% 시장 점유율 달성 목표",
+    tam: {
+      description: "글로벌 문서 자동 생성 AI 시장",
+      marketSizeNum: 300,
+      marketSizeUnit: "억 달러",
+      marketSizeJustification:
+        "글로벌 문서 자동 생성 AI 시장 성장률 5% 적용 2025년 예상치 (2024년 285억 달러 x 1.05)",
+    },
+    sam: {
+      description: "글로벌 중소기업 문서 자동화 시장",
+      marketSizeNum: 60,
+      marketSizeUnit: "억 달러",
+      marketSizeJustification:
+        "글로벌 중소기업 부문은 전체 시장의 약 20%에 해당 (285억 달러 x 0.20)",
+    },
+    som: {
+      description: "초기 주요 지역 시장에서 5% 점유율",
+      marketSizeNum: 3000,
+      marketSizeUnit: "만 달러",
+      marketSizeJustification:
+        "주요 지역의 초기 시장 규모는 전 세계 기업의 1% (2,500,000개) x 평균 비용 (60만 달러) x 연간 사용 횟수 (2회)",
+    },
+  },
 };

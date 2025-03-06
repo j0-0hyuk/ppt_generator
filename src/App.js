@@ -5,30 +5,28 @@ import { introductionTemplate } from "./templates/introductionTemplate";
 import { problemTemplate } from "./templates/problemTemplate";
 import { solutionTemplate } from "./templates/solutionTemplate";
 import { marketTemplate } from "./templates/marketTemplate";
+import { tamSamSomTemplate } from "./templates/tamSamSomTemplate"; // ✅ 추가
 import { mockData } from "./mockData";
 
 const templates = {
-  introduction: introductionTemplate,
-  problem: problemTemplate,
-  solution: solutionTemplate,
-  market: marketTemplate, // ✅ Market 템플릿 추가
+  introductionTemplate,
+  problemTemplate,
+  solutionTemplate,
+  marketTemplate,
+  tamSamSomTemplate, // ✅ 추가
 };
 
 const App = () => {
   const handleGeneratePPT = () => {
     let pptx = new PptxGenJS();
-    pptx.defineSlideMaster({
-      title: "MASTER_SLIDE",
-      objects: [{ text: " ", options: { FontFace: "Noto Sans" } }],
-    });
 
     slidesConfig.forEach((slideConfig) => {
-      let slide = pptx.addSlide("MASTER_SLIDE");
+      let slide = pptx.addSlide();
       const templateFunc = templates[slideConfig.template];
       const slideData = mockData[slideConfig.key];
 
       if (templateFunc) {
-        templateFunc(slide, slideData, pptx); // ✅ pptx 인스턴스 전달
+        templateFunc(slide, slideData, pptx);
       } else {
         console.error(`❌ Error: ${slideConfig.key} 템플릿을 찾을 수 없음!`);
       }
